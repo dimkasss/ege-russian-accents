@@ -16,13 +16,14 @@
             Выберите слово, где <b>верно</b> поставлено ударение:
         </div>
         <div class="task__cont">
-            <div class="task__cont__option task_cont_one" onclick="pick(0)">
+            <div class="task__cont__option task_cont_one">
                 -
             </div>
-            <div class="task__cont__option task_cont_two" onclick="pick(1)">
+            <div class="task__cont__option task_cont_two">
                 -
             </div>
         </div>
+        <div class="task__check__box"></div>
         <div class="task__check">
             <div class="task__check__clearness">
                 -
@@ -33,45 +34,63 @@
         </div>
     </div>
 </body>
+<script src="returning-words.js"></script>
 <script>
-    function getwords(){
-        return ["аэропОрты", "аэропортЫ", 0];
-    }
-
-    let [word1, word2, key] = getwords();
-    let correct = word1;
-    if(key==1){
-        correct = word2;
-    }
-    const task_one = document.getElementsByClassName("task_cont_one")[0];
-    const task_two = document.getElementsByClassName("task_cont_two")[0];
-    const answer_box = document.getElementsByClassName("task__check")[0];
-    const answer = document.getElementsByClassName("task__check__clearness")[0];
-    task_one.innerHTML = word1;
-    task_two.innerHTML = word2;
-    function pick(n){
-        if(key == n){
-            answer.innerHTML = "Верно!! УраУра";
-            if(n==0){
-                task_one.style.background = "green";
+    function task(){
+        const reset = (obj1, obj2, ans) => {
+            obj1.style.background = "var(--purple)";
+            obj2.style.background = "var(--purple)";
+            obj1.style.pointerEvents = "all";
+            obj2.style.pointerEvents = "all";
+            ans.style.pointerEvents = "none";
+            ans.style.opacity = "0";
+        }
+        let [word1, word2, key] = getWords();
+        let correct = word1;
+        if(key==1){
+            correct = word2;
+        }
+        const task_one = document.getElementsByClassName("task_cont_one")[0];
+        const task_two = document.getElementsByClassName("task_cont_two")[0];
+        const answer_box = document.getElementsByClassName("task__check")[0];
+        const answer = document.getElementsByClassName("task__check__clearness")[0];
+        reset(task_one, task_two, answer_box);
+        task_one.innerHTML = word1;
+        task_two.innerHTML = word2;
+        task_one.addEventListener("click", ()=>{
+            pick(0);
+        })
+        task_two.addEventListener("click", ()=>{
+            pick(1);
+        })
+        const pick = (n) =>{
+            if(key == n){
+                answer.innerHTML = "Верно!! УраУра";
+                if(n==0){
+                    task_one.style.background = "green";
+                }
+                else{
+                    task_two.style.background = "green";
+                }
             }
             else{
-                task_two.style.background = "green";
+                answer.innerHTML = "Неверно!! Правильный вариант: <b>" + correct + "</b>";
+                if(n==0){
+                    task_one.style.background = "red";
+                }
+                else{
+                    task_two.style.background = "red";
+                }
             }
+            answer_box.style.opacity = "1";
+            task_one.style.pointerEvents = "none";
+            task_two.style.pointerEvents = "none";
+            answer_box.style.pointerEvents = "all";
         }
-        else{
-            answer.innerHTML = "Неверно!! Правильный вариант: <b>" + correct + "</b>";
-            if(n==0){
-                task_one.style.background = "red";
-            }
-            else{
-                task_two.style.background = "red";
-            }
-        }
-        answer_box.style.opacity = "1";
     }
+    task();
     function rload(){
-        location.reload();
+        task();
     }
 </script>
 </html>
