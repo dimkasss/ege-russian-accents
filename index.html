@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЕГЭ. Русский Язык. Задание 4</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cont">
+        <div class="task__name">
+            Задание 4
+        </div>
+        <div class="task__desc">
+            Выберите слово, где <b>верно</b> поставлено ударение:
+        </div>
+        <div class="task__cont">
+            <div class="task__cont__option task_cont_one" onclick="pick(0)">
+                -
+            </div>
+            <div class="task__cont__option task_cont_two" onclick="pick(1)">
+                -
+            </div>
+        </div>
+        <div class="task__check">
+            <div class="task__check__clearness">
+                -
+            </div>
+            <div class="task__check__continue" onclick="rload()">
+                Продолжить
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function getwords(){
+        return ["аэропОрты", "аэропортЫ", 0];
+    }
+
+    let [word1, word2, key] = getwords();
+    let correct = word1;
+    if(key==1){
+        correct = word2;
+    }
+    const task_one = document.getElementsByClassName("task_cont_one")[0];
+    const task_two = document.getElementsByClassName("task_cont_two")[0];
+    const answer_box = document.getElementsByClassName("task__check")[0];
+    const answer = document.getElementsByClassName("task__check__clearness")[0];
+    task_one.innerHTML = word1;
+    task_two.innerHTML = word2;
+    function pick(n){
+        if(key == n){
+            answer.innerHTML = "Верно!! УраУра";
+            if(n==0){
+                task_one.style.background = "green";
+            }
+            else{
+                task_two.style.background = "green";
+            }
+        }
+        else{
+            answer.innerHTML = "Неверно!! Правильный вариант: <b>" + correct + "</b>";
+            if(n==0){
+                task_one.style.background = "red";
+            }
+            else{
+                task_two.style.background = "red";
+            }
+        }
+        answer_box.style.opacity = "1";
+    }
+    function rload(){
+        location.reload();
+    }
+</script>
+</html>
